@@ -152,7 +152,7 @@ class Scrapper:
 
 
 if __name__ == '__main__':
-    from mech_scrapper import *
+    from mech_scrapper_run import *
     scrap = Scrapper(SITE)
     scrap.follow_link('movie')
     scrap.follow_link('Star-Wars')
