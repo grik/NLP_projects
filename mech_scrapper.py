@@ -1,9 +1,6 @@
 import mechanicalsoup
 import nltk
 from sklearn.feature_extraction.text import CountVectorizer
-import json
-import time
-import pickle
 
 SITE = "http://fanfiction.net"
 
@@ -14,9 +11,6 @@ class Scrapper:
         self.response = self.__browser.open(self.site)
         self.links = []
         self.chapters = []
-        self.downloaded = []
-        with open("dict.txt","a+") as f:
-            f.close()
     def open(self,site):
         return self.__browser.open(site)
     def follow_link(self,follow_link):
@@ -80,16 +74,13 @@ class Scrapper:
             self.chapters.append(a[3])
 
 
-        return self.links,self.chapters, #list of links to download each fanfic; list of chapters of each fanfic piece
-    def download_list(self,ran_giv = 2,pr_link=True,save_file=True): #links and chapters are product of preparing_links function;
+        return self.links,self.chapters #list of links to download each fanfic; list of chapters of each fanfic piece
+    def download_list(self,ran_giv = 2,pr_link=True): #links and chapters are product of preparing_links function;
         #ran_giv is a number of links that are going to be downloaded; for all links  use len(links);
         #pr_link is a decision whether print links during downloading or not.
-        self.__ran_giv = ran_giv
-        links = self.checkfiles()
+        links = self.links
         chapters = self.chapters
-        downloaded = self.downloaded
         data_sample = []
-        story_name = []
 
         for n in range(ran_giv):
             old_one = links[n].split('/')
@@ -105,7 +96,6 @@ class Scrapper:
                     new_one += '/'
                 new_one += old_one[-1]
 
-                downloaded.append(new_one)
                 if pr_link == True:
                     print(new_one)
 
@@ -116,54 +106,31 @@ class Scrapper:
                 one_fan_fic.append(self.__cleaned)
             data_sample.append(one_fan_fic)
 
-            for i in range(len(downloaded)):
-                for i in range(len(links)):
-                    _temp = links[i]
-                    _temp = links[i].split("/")[-1]
-                    story_name.append(_temp)
+        return data_sample
 
 
-        with open ('dict.txt','a') as h:
-            for i in downloaded:
-                h.write(i + "\n")
-            h.close()
-        print ("Operation completed!")
-        if save_file:
-            for i in range(len(data_sample)):
-                with open (str(story_name[i]) + '.txt','a') as k:
-                    k.write(str(one_fan_fic))
-                    k.close()
-        return set(story_name)
-    def checkfiles(self):
-        __links = self.links
-        print ("Links avalible to scrap:", len(self.links))
-        with open ('dict.txt','r') as g:
-            histor = g.read()
-            for j in range(len(__links)):
-                for i in __links:
-                    if i in histor:
-                        __links.remove(i)
-                    else:
-                        pass
-            g.close()
-        print ("Links not downloaded:", len(__links))
-        print ('You selected {} links to download.'.format(self.__ran_giv))
-        return __links
+#Sample
+scrap = Scrapper(SITE)
+scrap.follow_link('movie')
+scrap.follow_link('Star-Wars')
+scrap.filtered_fan_fiction()
+scrap.open(scrap.filtered_fan_fiction())
+
+scrap.preparing_links()
+
+links = scrap.links
+chapters = scrap.chapters
 
 
-if __name__ == '__main__':
-    from mech_scrapper import *
-    scrap = Scrapper(SITE)
-    scrap.follow_link('movie')
-    scrap.follow_link('Star-Wars')
-    scrap.filtered_fan_fiction()
-    scrap.open(scrap.filtered_fan_fiction())
-    scrap.preparing_links()
-    print ("Scrapper will now download the fanfiction into files. \n")
-    answer = input("Do you want to continue? [Y/N] \n")
-    if answer.upper() == "Y":
-        x = input('How many? \n ')
-        if x.upper() is "ALL":
-            story = scrap.download_list(ran_giv=len(scrap.links))
-        else :
-            story = scrap.download_list(ran_giv=int(x))
+story = scrap.download_list(ran_giv=1)
+
+story[i]
+
+#FUTURE USE#
+def tokenizing(browser): #function to download and tokenize data
+    soup = browser.get_current_page()
+    page = soup.get_text()
+    cleaned = cleaning(page)
+    tokens = nltk.word_tokenize(str(cleaned))
+    text_tokens = nltk.Text(tokens)
+    return text_tokens

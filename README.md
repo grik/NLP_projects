@@ -1,3 +1,3 @@
 # NLP_projects
 
-WebScrapper 0.1
+Creating a WebScrapper class for future use.
