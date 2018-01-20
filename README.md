@@ -1,3 +1,7 @@
 # NLP_projects
 
-Creating a WebScrapper class for future use.
+Scrapper 0.1
+
+Creating as script to scrap fanfiction from web.
+
+Still few things to fix/do.
