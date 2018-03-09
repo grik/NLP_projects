@@ -1,6 +1,6 @@
 # NLP_projects
 
-Scrapper 0.1
+Scrapper 0.2
 
 Creating as script to scrap fanfiction from web.
 
