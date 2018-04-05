@@ -1,0 +1,26 @@
+TODO
+
+- Please test it. 
+- SCRAPPING MORE PAGES, NOT ONLY ONE PAGE OF SEARCH RESULT. Presume we need at least 1000 stories from each fandom/genre. 
+- PEP8 styling
+- More advanced menu
+- Proper comments! Docstrings!
+- Error handling (tries to reconnect, than moves to a next story?)
+- Asynchronous connections (parallel, several at a time -> much faster download speed)
+- to prevent unicode error, a unidecode module was used. Maybe there is an alternative. And maybe there is a batter way to use it (for now it decodes entire page)
+- someone should make sure, we roperly use "self", not sure if all of them are necessary.
+
+CHANGELOG
+mech_scrapper_run_0.2 (05.04.2018)
+- New files: changelog and filtering options.
+- Redesigned the preparing_links module. It's more comprehensive and a bit quicker. It gets links to final chapters, so in download_list it can be extracted (links were being split there anyway)
+- redesigned download_list. Now works and is quite straightforward.
+- Commented unused libraries out.
+- commented file.close() out - afaik it's redundant with "with open() as file" option.
+- Fanfics are saved one by one, not in batches. Safer.
+- history is one entry per story. We don't need more. Search is done by story id.
+
+Bugs found and solved
+- download_list started downloading from page 0, which is the same as page 1 on fanfiction.net.
+- "'charmap' codec can't encode character '\u2212'" error has been handled (it started to show, when not only the last page was saved)
+- checkfiles updated only the list of links, desynchronizing it with the list of chapters. Results are easy to imagine and files easy to be poorly downloaded.
