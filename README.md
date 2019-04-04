@@ -1,7 +1,13 @@
 # NLP_projects
 
-Scrapper 0.2
+Scrapper 1.0
 
-Creating as script to scrap fanfiction from web.
+## Aim
 
-Still few things to fix/do.
+Creating script to scrap fanfiction from web.
+
+## Technologies
+mechanicalsoup,python 3.7
+
+## Progress
+Finished polishing new version of code
